@@ -32,7 +32,7 @@ pipeline {
    
         stage('on-devop') {
       when {
-        branch 'devop'
+        branch 'main-devops'
       }
       stage('On-Edge2-Run') {
           agent any
