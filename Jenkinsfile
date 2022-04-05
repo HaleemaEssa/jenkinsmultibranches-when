@@ -8,7 +8,7 @@ pipeline {
       when {
         branch 'main'
       }
-      stage('On-edg1') {
+      
           agent any
           steps {
             sh 'echo "edge1"'
@@ -17,9 +17,9 @@ pipeline {
             sh 'docker run -v "${PWD}:/data" -t haleema/docker-edge1'
 
           }
-        }
+        
          
-        stage('On-RPI') {
+        
           agent {label 'linuxslave1'}
           steps {
             sh 'echo "rpi" '
@@ -27,14 +27,14 @@ pipeline {
             //sh 'docker build -t haleema/docker-rpi:latest .'
             sh 'docker run --privileged -t haleema/docker-rpi'
           }
-        }
+       
       }
    
         stage('on-devop') {
       when {
         branch 'main-devops'
       }
-      stage('On-Edge2-Run') {
+      
           agent any
           steps {
             sh 'echo "edge2"'
@@ -43,8 +43,8 @@ pipeline {
             sh 'docker build -t haleema/docker-edge2:latest .'
             sh 'docker run -v "${PWD}:/data" -t haleema/docker-edge2'
           }
-    }
-    stage('On-Cloud-Run') {
+    
+    
       agent {label 'aws'}
           steps {
             sh 'echo "cloud" '
@@ -52,7 +52,7 @@ pipeline {
            // sh 'docker build -t haleema/docker-cloud:latest .'
             sh 'docker run -v "${PWD}:/data" -t haleema/docker-cloud'
           }
-    }
+    
       }
     }
 }
